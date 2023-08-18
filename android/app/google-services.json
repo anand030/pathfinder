@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "652748650556",
+    "project_id": "x-pathfinder",
+    "storage_bucket": "x-pathfinder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652748650556:android:6351c74eaf91cf989fab39",
+        "android_client_info": {
+          "package_name": "com.thinkalt.pathfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652748650556-8fevpkccli56f1rko05jquocbfag67f2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9S7I53mOLP4UrQrSIQvO16H66SyhTwSA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652748650556-8fevpkccli56f1rko05jquocbfag67f2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "652748650556-eonurmn3s8kqraclfmj9qjdjpfl0u0g6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.thinkalt.babyClaridges"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
