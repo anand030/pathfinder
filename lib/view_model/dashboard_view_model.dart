@@ -211,6 +211,7 @@ class DashboardViewModel with ChangeNotifier {
     var response = await Repository().addNote(body);
     hospitalAlertType = HospitalAlertType.orange;
     if (response is Success) {
+      getUserPerformance(onFailure: (response) {});
       getNotes();
     }
     if (response is Failure) {

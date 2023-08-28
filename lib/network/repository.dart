@@ -18,6 +18,7 @@ class Repository {
   final _mRPerformanceEndPoint = 'api/AMPerformance/MRPerformance?UserId=';
   final _setSecurityPinEndPoint = 'api/userPin?Pin=';
   final _authenticateSecurityPinEndPoint = 'api/userPin/Authenticate?UserPin=';
+  final _fcmTokenEndPoint = 'api/PushNotification?DeviceId=';
 
   Future<Object> login(Map body) async {
     final response = await apiBaseHelper.post(
@@ -96,6 +97,15 @@ class Repository {
   Future<Object> authenticateSecurityPin(String pin) async {
     final response = await apiBaseHelper.get(
         endpoint: '$_authenticateSecurityPinEndPoint$pin',
+        headers: await getHeader());
+    return response;
+  }
+
+
+  Future<Object> addFCMToken(String token) async {
+    final response = await apiBaseHelper.post(
+        endpoint: '$_fcmTokenEndPoint$token',
+        body: {},
         headers: await getHeader());
     return response;
   }

@@ -245,6 +245,7 @@ class _LoginPageState extends State<LoginPage> {
                                                           SecurityPinType
                                                               .setUp)));
                                     }, onFailure: (error) {
+                                      debugPrint('error $error');
                                       loginViewModel.setShowSnackBar(true);
                                       // showSnackBar(context,
                                       //     message: 'Invalid Credentials');

@@ -4,7 +4,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:pathfinder/model/performance_model.dart';
+import 'package:pathfinder/view/hospital_detail_page.dart';
 import 'package:pathfinder/view/profile_page.dart';
+import 'package:pathfinder/view_model/dashboard_view_model.dart';
+import 'package:provider/provider.dart';
 
 class NotificationServices {
   //initialising firebase message plugin
@@ -115,6 +119,8 @@ class NotificationServices {
     NotificationDetails notificationDetails = NotificationDetails(
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
 
+    debugPrint(
+        'datainRemoteMessagwm ${message.data} ${message.notification!.title}');
     Future.delayed(Duration.zero, () {
       _flutterLocalNotificationsPlugin.show(
         0,
@@ -149,33 +155,23 @@ class NotificationServices {
 
     //when app is in killed
     if (initialMessage != null) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ProfilePage()));
+      handleNotificationClick(context, initialMessage);
     }
 
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ProfilePage()));
+      handleNotificationClick(context, event);
     });
   }
 
-  // void handleMessage(BuildContext context, RemoteMessage message) async {
-  //   debugPrint('Remote message ${message}');
-  //   var tokenId = await GraphQLService().getFirebaseToken();
-  //   ChannelDescriptionModel channelDescriptionModel = await GraphQLService()
-  //       .getSubscribedChannelDesc(
-  //           token: tokenId, ids: [int.parse(message.data['channel-id'])]);
-  //   ChatViewModel chatViewModel = ChatViewModel();
-  //   chatViewModel.selectedChannel = channelDescriptionModel.nodes![0];
-  //   await setChannelIdSP(chatViewModel.selectedChannel.id!);
-  //   context.read<ChatViewModel>().getMessageByChannelId('');
-  //   await chatViewModel.getChannelMemberCount();
-  //   Navigator.of(context, rootNavigator: true).push(
-  //     MaterialPageRoute(
-  //       builder: (_) => ChatDetailPage(),
-  //     ),
-  //   );
-  // }
+  void handleNotificationClick(BuildContext context, RemoteMessage message) {
+    debugPrint('notioficationClick $message');
+    context.read<DashboardViewModel>().selectedHospital =
+        Hospitals(id: int.parse(message.data['HospitalID']));
+    context.read<DashboardViewModel>().getHospitalDetails();
+    context.read<DashboardViewModel>().getNotes();
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HospitalDetailPage()));
+  }
 
   Future foregroundMessage() async {
     await FirebaseMessaging.instance

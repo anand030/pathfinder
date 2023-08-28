@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:pathfinder/model/performance_model.dart';
+import 'package:pathfinder/utilities/consts/constants.dart';
 import 'package:pathfinder/view/profile_page.dart';
 import 'package:pathfinder/view/widget_screens/empty_data_screen.dart';
+import 'package:pathfinder/widgets/floating_snack_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../utilities/consts/color_consts.dart';
 import '../utilities/text_styles.dart';
 import '../view_model/dashboard_view_model.dart';
+import 'hospital_detail_page.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -79,7 +83,7 @@ class NotificationsPage extends StatelessWidget {
                               minLeadingWidth: 0,
                               leading: dashboardViewModel.notificationModel
                                           .data![index].alertType! ==
-                                      'Red'
+                                      HospitalAlertType.red
                                   ? SvgPicture.asset(
                                       'assets/images/alert_red.svg')
                                   : Icon(
@@ -97,19 +101,38 @@ class NotificationsPage extends StatelessWidget {
                               trailing: Visibility(
                                 visible: dashboardViewModel.notificationModel
                                         .data![index].alertType! ==
-                                    'Red',
+                                    HospitalAlertType.red,
                                 child: Container(
-                                  padding: EdgeInsets.all(3),
+                                  height: 40,
+                                  width: 40,
+                                  padding: EdgeInsets.all(0),
                                   decoration: BoxDecoration(
                                       color: Color(0xFFEDCBE2),
                                       shape: BoxShape.circle,
                                       border: Border.all(
                                           color: Palette.primaryColor,
                                           width: 1.5)),
-                                  child: Icon(
-                                    Icons.arrow_forward_ios_outlined,
-                                    size: 20,
-                                    color: Palette.primaryColor,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_forward_ios_outlined,
+                                      size: 20,
+                                      color: Palette.primaryColor,
+                                    ),
+                                    onPressed: () {
+                                      dashboardViewModel.selectedHospital =
+                                          Hospitals(
+                                              id: dashboardViewModel
+                                                  .notificationModel
+                                                  .data![index]
+                                                  .hospitalID);
+                                      dashboardViewModel.getHospitalDetails();
+                                      dashboardViewModel.getNotes();
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HospitalDetailPage()));
+                                    },
                                   ),
                                 ),
                               ),

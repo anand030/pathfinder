@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:pathfinder/model/user_model.dart';
 import 'package:pathfinder/utilities/consts/color_consts.dart';
 import 'package:pathfinder/utilities/consts/constants.dart';
 import 'package:pathfinder/utilities/text_styles.dart';
@@ -76,9 +79,34 @@ class _DashboardPageState extends State<DashboardPage> {
               elevation: 0,
               leadingWidth: 0,
               backgroundColor: Colors.transparent,
-              title: Text(
-                'My Territory',
-                style: CustomTextStyles().largeText(),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'My Territory',
+                    style: CustomTextStyles().largeText(),
+                  ),
+                  FutureBuilder(
+                    future: PrefUtils().getUserData(),
+                    builder: (context, snapShot) {
+                      if (snapShot.hasData) {
+                        if (snapShot.data!.isNotEmpty) {
+                          UserModel userModel =
+                              UserModel.fromJson(jsonDecode(snapShot.data!));
+                          return userModel.teamRole == UserRole.mr
+                              ? Text(
+                                  '${userModel.userName}, ${userModel.areaCode}',
+                                  style: CustomTextStyles()
+                                      .text(color: Palette.secondaryColor),
+                                )
+                              : Container();
+                        }
+                        return Container();
+                      }
+                      return Container();
+                    },
+                  ),
+                ],
               ),
               actions: [
                 IconButton(
@@ -104,7 +132,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     icon: const Icon(
                       Icons.account_circle_rounded,
                       color: Palette.primaryColor,
-                      size: 30,
+                      size: 40,
                     )),
               ],
             )

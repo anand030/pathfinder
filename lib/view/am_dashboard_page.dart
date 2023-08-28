@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,8 +8,10 @@ import 'package:pathfinder/view/dashboard_page.dart';
 import 'package:pathfinder/view/profile_page.dart';
 import 'package:provider/provider.dart';
 
+import '../model/user_model.dart';
 import '../notification_services.dart';
 import '../utilities/consts/color_consts.dart';
+import '../utilities/pref_utils.dart';
 import '../utilities/text_styles.dart';
 import '../view_model/dashboard_view_model.dart';
 import 'hospital_detail_page.dart';
@@ -46,9 +50,32 @@ class _AMDashboardPageState extends State<AMDashboardPage> {
         elevation: 0,
         leadingWidth: 0,
         backgroundColor: Colors.transparent,
-        title: Text(
-          'My Area',
-          style: CustomTextStyles().largeText(),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'My Area',
+              style: CustomTextStyles().largeText(),
+            ),
+            FutureBuilder(
+              future: PrefUtils().getUserData(),
+              builder: (context, snapShot) {
+                if (snapShot.hasData) {
+                  if (snapShot.data!.isNotEmpty) {
+                    UserModel userModel =
+                        UserModel.fromJson(jsonDecode(snapShot.data!));
+                    return Text(
+                      '${userModel.userName}, ${userModel.areaCode}',
+                      style: CustomTextStyles()
+                          .text(color: Palette.secondaryColor),
+                    );
+                  }
+                  return Container();
+                }
+                return Container();
+              },
+            ),
+          ],
         ),
         actions: [
           IconButton(

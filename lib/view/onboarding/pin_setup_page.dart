@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
@@ -35,6 +36,11 @@ class _PinSetUpPageState extends State<PinSetUpPage> {
     }
     super.initState();
   }
+
+  // void getToken() async {
+  //   var token = await FirebaseMessaging.instance.getToken();
+  //   debugPrint('tken $token');
+  // }
 
   initBiometricAuth() async {
     final myModel = Provider.of<LoginViewModel>(context, listen: false);
@@ -111,16 +117,9 @@ class _PinSetUpPageState extends State<PinSetUpPage> {
                       ),
                       Pinput(
                         length: 6,
-                        onChanged: (pin) {
-                          loginViewModel.securityPin = pin;
-                          if (pin.length == 6) {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             const ResetPasswordPage()));
-                          }
-                        },
+                        controller:
+                            loginViewModel.textEditingControllerSecurityPin,
+                        onChanged: (pin) {},
                         validator: (value) {
                           if (value!.length < 6) {
                             return 'Please enter a valid 6 digit Security Pin';

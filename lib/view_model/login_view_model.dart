@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pathfinder/model/user_model.dart';
 import 'package:pathfinder/network/api_status.dart';
@@ -20,12 +21,15 @@ class LoginViewModel with ChangeNotifier {
   UserModel userModel = UserModel();
   TextEditingController textEditingControllerEmail = TextEditingController();
   TextEditingController textEditingControllerPass = TextEditingController();
+  TextEditingController textEditingControllerSecurityPin =
+      TextEditingController();
 
   // String email = '';
   // String password = '';
   String newPassword = '';
   String otp = '';
-  String securityPin = '';
+
+  // String securityPin = '';
 
   bool get loading => _loading;
 
@@ -76,7 +80,6 @@ class LoginViewModel with ChangeNotifier {
       "password": textEditingControllerPass.text.trim(),
       "Otp": "0"
     };
-
     var response = await Repository().login(body);
     setLoading(false);
     if (response is Success) {
@@ -85,11 +88,13 @@ class LoginViewModel with ChangeNotifier {
       userModel = UserModel.fromJson(jsonDecode(response.response));
       onSuccess();
       PrefUtils().setUserData(response.response);
-      // PrefUtils().setUserLoggedIn();
       PrefUtils().setUserAuthToken(userModel.token!);
+
+      var token = await FirebaseMessaging.instance.getToken();
+      await Repository().addFCMToken(token!);
     }
     if (response is Failure) {
-      onFailure('Error');
+      onFailure(response.errorResponse);
     }
   }
 
@@ -111,9 +116,11 @@ class LoginViewModel with ChangeNotifier {
       {required void Function() onSuccess,
       required void Function(String?) onFailure}) async {
     setLoading(true);
-    var response = await Repository().setSecurityPin(securityPin);
+    var response = await Repository()
+        .setSecurityPin(textEditingControllerSecurityPin.text);
     setLoading(false);
     if (response is Success) {
+      textEditingControllerSecurityPin.clear();
       onSuccess();
       debugPrint('response ${response.response}');
     }
@@ -127,9 +134,11 @@ class LoginViewModel with ChangeNotifier {
       {required void Function() onSuccess,
       required void Function(String?) onFailure}) async {
     setLoading(true);
-    var response = await Repository().authenticateSecurityPin(securityPin);
+    var response = await Repository()
+        .authenticateSecurityPin(textEditingControllerSecurityPin.text);
     setLoading(false);
     if (response is Success) {
+      textEditingControllerSecurityPin.clear();
       onSuccess();
     }
     if (response is Failure) {

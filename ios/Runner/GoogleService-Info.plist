@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1073287433023-cjsd4k65mv7c2g73745fp6re15d7ols3.apps.googleusercontent.com</string>
+	<string>652748650556-utet1mt25lepcb3sg1in868k0bnq3pq3.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1073287433023-cjsd4k65mv7c2g73745fp6re15d7ols3</string>
+	<string>com.googleusercontent.apps.652748650556-utet1mt25lepcb3sg1in868k0bnq3pq3</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAkMThUxA8l9zuo_bb0SrUGaGbuR3SuJwc</string>
+	<string>AIzaSyAG-lVvU9RcZ9qZFGxGVB7we8qL4WenG30</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1073287433023</string>
+	<string>652748650556</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.thinkalt.babyClaridges</string>
+	<string>com.thinkalt.pathfinder</string>
 	<key>PROJECT_ID</key>
-	<string>x-the-baby-claridges</string>
+	<string>x-pathfinder</string>
 	<key>STORAGE_BUCKET</key>
-	<string>x-the-baby-claridges.appspot.com</string>
+	<string>x-pathfinder.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1073287433023:ios:371ad11ce3cfdf005a218a</string>
+	<string>1:652748650556:ios:9d6992f0f50d74799fab39</string>
 </dict>
 </plist>

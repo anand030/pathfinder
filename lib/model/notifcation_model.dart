@@ -30,13 +30,15 @@ class Data {
   String? message;
   String? timeStamp;
   String? alertType;
+  int? hospitalID;
 
   Data(
       {this.notificationID,
         this.title,
         this.message,
         this.timeStamp,
-        this.alertType});
+        this.alertType,
+        this.hospitalID});
 
   Data.fromJson(Map<String, dynamic> json) {
     notificationID = json['NotificationID'];
@@ -44,6 +46,7 @@ class Data {
     message = json['Message'];
     timeStamp = json['TimeStamp'];
     alertType = json['AlertType'];
+    hospitalID = json['HospitalID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -53,6 +56,7 @@ class Data {
     data['Message'] = this.message;
     data['TimeStamp'] = this.timeStamp;
     data['AlertType'] = this.alertType;
+    data['HospitalID'] = this.hospitalID;
     return data;
   }
 }
