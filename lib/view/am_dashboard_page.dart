@@ -246,13 +246,23 @@ class _AMDashboardPageState extends State<AMDashboardPage> {
                                     dashboardViewModel.mrList[index].name!,
                                     style: CustomTextStyles().header(),
                                   ),
-                                  // trailing: Container(
-                                  //   height: 20,
-                                  //   width: 20,
-                                  //   decoration: BoxDecoration(
-                                  //       color: Colors.green,
-                                  //       shape: BoxShape.circle),
-                                  // ),
+                                  trailing: Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: BoxDecoration(
+                                        color: dashboardViewModel
+                                            .mrList[index]
+                                            .alertType! ==
+                                            HospitalAlertType.green
+                                            ? Colors.green
+                                            : dashboardViewModel
+                                            .mrList[index]
+                                            .alertType! ==
+                                            HospitalAlertType.red
+                                            ? Colors.red
+                                            : Colors.orange,
+                                        shape: BoxShape.circle),
+                                  ),
                                 ),
                                 Row(
                                   mainAxisAlignment:

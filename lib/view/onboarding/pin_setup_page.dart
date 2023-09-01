@@ -14,6 +14,7 @@ import '../../utilities/text_styles.dart';
 import '../../view_model/login_view_model.dart';
 import '../../widgets/buttons/basic_button.dart';
 import '../../widgets/buttons/primary_button.dart';
+import '../../widgets/floating_snack_bar.dart';
 import '../am_dashboard_page.dart';
 import '../dashboard_page.dart';
 
@@ -167,6 +168,19 @@ class _PinSetUpPageState extends State<PinSetUpPage> {
                         ),
                       ),
                       const SizedBox(
+                        height: 50,
+                      ),
+                      Visibility(
+                        visible: loginViewModel.showSnackBarPin,
+                        child: FloatingSnackBar(
+                          message: 'Invalid PIN',
+                          alertType: AlertType.Failure,
+                          onCloseClick: () {
+                            loginViewModel.setShowSnackBarPin(false);
+                          },
+                        ),
+                      ),
+                      const SizedBox(
                         height: 100,
                       ),
                       Align(
@@ -197,8 +211,8 @@ class _PinSetUpPageState extends State<PinSetUpPage> {
                                                     ? const DashboardPage()
                                                     : const AMDashboardPage()));
                                       }, onFailure: (error) {
-                                        showSnackBar(context,
-                                            message: 'Invalid Pin');
+                                        // showSnackBar(context,
+                                        //     message: 'Invalid Pin');
                                       });
                                     }
                                     if (widget.securityPinType ==

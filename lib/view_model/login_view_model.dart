@@ -11,6 +11,7 @@ class LoginViewModel with ChangeNotifier {
   bool _loading = false;
   bool _showSnackBar = false;
   bool _showSnackBarOTP = false;
+  bool _showSnackBarPin = false;
 
   // bool isUsedLoggedIn = false;
   final formKey = GlobalKey<FormState>();
@@ -36,6 +37,8 @@ class LoginViewModel with ChangeNotifier {
   bool get showSnackBar => _showSnackBar;
 
   bool get showSnackBarOTP => _showSnackBarOTP;
+
+  bool get showSnackBarPin => _showSnackBarPin;
 
   bool get hidePassword => _hidePassword;
 
@@ -63,6 +66,11 @@ class LoginViewModel with ChangeNotifier {
 
   setShowSnackBarOTP(bool value) {
     _showSnackBarOTP = value;
+    notifyListeners();
+  }
+
+  setShowSnackBarPin(bool value) {
+    _showSnackBarPin = value;
     notifyListeners();
   }
 
@@ -140,8 +148,10 @@ class LoginViewModel with ChangeNotifier {
     if (response is Success) {
       textEditingControllerSecurityPin.clear();
       onSuccess();
+      setShowSnackBarPin(false);
     }
     if (response is Failure) {
+      setShowSnackBarPin(true);
       onFailure('Error');
     }
   }
