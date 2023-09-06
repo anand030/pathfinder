@@ -27,7 +27,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
 
   // final RemoteMessage remoteMessage =
   //     (await FirebaseMessaging.instance.getInitialMessage())!;
@@ -37,19 +37,19 @@ void main() async {
   // var token = await FirebaseMessaging.instance.getToken();
   // debugPrint('message App is terminated ${token}');
 
-  RemoteMessage? initialMessage =
-      await FirebaseMessaging.instance.getInitialMessage();
+  // RemoteMessage? initialMessage =
+  //     await FirebaseMessaging.instance.getInitialMessage();
+  //
+  // if (initialMessage != null) {
+  //   debugPrint('message App is terminated');
+  // }
 
-  if (initialMessage != null) {
-    debugPrint('message App is terminated');
-  }
-
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    debugPrint('Just received a notification when app is opened ${message}');
-    if (message.notification != null) {
-      //"route" will be your root parameter you sending from firebase
-    }
-  });
+  // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+  //   debugPrint('Just received a notification when app is opened ${message}');
+  //   if (message.notification != null) {
+  //     //"route" will be your root parameter you sending from firebase
+  //   }
+  // });
 
   if (!kDebugMode) {
     FlutterError.onError = (errorDetails) {

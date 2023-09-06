@@ -58,8 +58,9 @@ dependencies:
   local_auth: ^2.1.6
   shared_preferences: ^2.2.0
   google_fonts: ^4.0.4
-  syncfusion_flutter_charts: ^21.1.41
+#  syncfusion_flutter_charts: ^22.2.11
   flutter_svg: ^2.0.0
+  fl_chart: ^0.55.2
 
 
 dev_dependencies:

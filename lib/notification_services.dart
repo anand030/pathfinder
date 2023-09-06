@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:pathfinder/model/performance_model.dart';
 import 'package:pathfinder/view/hospital_detail_page.dart';
-import 'package:pathfinder/view/profile_page.dart';
 import 'package:pathfinder/view_model/dashboard_view_model.dart';
 import 'package:provider/provider.dart';
 
