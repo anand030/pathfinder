@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:pathfinder/utilities/text_styles.dart';
 import 'package:pathfinder/view_model/dashboard_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -14,16 +15,16 @@ class GraphPage extends StatefulWidget {
 }
 
 class _GraphPageState extends State<GraphPage> {
-  final Color leftBarColor = Colors.yellowAccent;
-  final Color rightBarColor = Colors.redAccent;
-  final Color avgColor = Colors.indigoAccent;
-
   final double width = 10;
-
-  // List<BarChartGroupData> rawBarGroups = [];
   List<BarChartGroupData> showingBarGroups = [];
-
-  int touchedGroupIndex = -1;
+  List<Color> barColorsList = [
+    Colors.cyan,
+    Colors.orangeAccent,
+    Colors.purpleAccent,
+    Colors.amberAccent,
+    Colors.deepPurpleAccent,
+    Colors.greenAccent
+  ];
 
   @override
   void initState() {
@@ -31,30 +32,6 @@ class _GraphPageState extends State<GraphPage> {
 
     final dashBoardViewModel =
         Provider.of<DashboardViewModel>(context, listen: false);
-
-    // dashBoardViewModel.hospitalDetailsModel.data.graphData.
-
-    // final barGroup1 = makeGroupData(0, 5, 12);
-    // final barGroup2 = makeGroupData(1, 16, 12);
-    // final barGroup3 = makeGroupData(2, 18, 5);
-    // final barGroup4 = makeGroupData(3, 20, 16);
-    // final barGroup5 = makeGroupData(4, 17, 6);
-    // final barGroup6 = makeGroupData(5, 19, 1.5);
-    // final barGroup7 = makeGroupData(6, 10, 1.5);
-
-    // final items = [
-    //   barGroup1,
-    //   barGroup2,
-    //   barGroup3,
-    //   barGroup4,
-    //   barGroup5,
-    //   barGroup6,
-    //   barGroup7,
-    // ];
-    //
-    // rawBarGroups = items;
-    //
-    // showingBarGroups = rawBarGroups;
 
     for (int i = 0;
         i <
@@ -64,36 +41,24 @@ class _GraphPageState extends State<GraphPage> {
       showingBarGroups.add(BarChartGroupData(
           barsSpace: 4,
           x: i,
-          barRods: addBardChartRodData(i, dashBoardViewModel)
-          // [
-          //   BarChartRodData(
-          //     toY: dashBoardViewModel
-          //         .hospitalDetailsModel.data!.graphData!.datasets!.first.data![i]
-          //         .toDouble(),
-          //     // color: leftBarColor,
-          //     width: width,
-          //   ),
-          //   BarChartRodData(
-          //     toY: dashBoardViewModel
-          //         .hospitalDetailsModel.data!.graphData!.datasets!.last.data![i]
-          //         .toDouble(),
-          //     // color: rightBarColor,
-          //     width: width,
-          //   ),
-          // ],
-          ));
+          barRods: addBardChartRodData(i, dashBoardViewModel)));
     }
   }
 
   List<BarChartRodData> addBardChartRodData(
       int index, DashboardViewModel dashboardViewModel) {
     List<BarChartRodData> barChartRodData = [];
-    for (var data
-        in dashboardViewModel.hospitalDetailsModel.data!.graphData!.datasets!) {
+    for (int i = 0;
+        i <
+            dashboardViewModel
+                .hospitalDetailsModel.data!.graphData!.datasets!.length;
+        i++) {
       barChartRodData.add(
         BarChartRodData(
-          toY: data.data![index].toDouble(),
-          // color: leftBarColor,
+          toY: dashboardViewModel
+              .hospitalDetailsModel.data!.graphData!.datasets![i].data![index]
+              .toDouble(),
+          color: barColorsList[i],
           width: width,
         ),
       );
@@ -107,33 +72,45 @@ class _GraphPageState extends State<GraphPage> {
     return AspectRatio(
       aspectRatio: 1,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // Row(
-            //   mainAxisSize: MainAxisSize.min,
-            //   children: <Widget>[
-            //     // makeTransactionsIcon(),
-            //     const SizedBox(
-            //       width: 38,
-            //     ),
-            //     const Text(
-            //       'Transactions',
-            //       style: TextStyle(color: Colors.black, fontSize: 22),
-            //     ),
-            //     const SizedBox(
-            //       width: 4,
-            //     ),
-            //     const Text(
-            //       'state',
-            //       style: TextStyle(color: Color(0xff77839a), fontSize: 16),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(
-            //   height: 38,
-            // ),
+            SizedBox(
+              height: 30,
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: dashboardViewModel
+                      .hospitalDetailsModel.data!.graphData!.datasets!.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 20,
+                            width: 20,
+                            decoration: BoxDecoration(
+                              color: barColorsList[index],
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            dashboardViewModel.hospitalDetailsModel.data!
+                                .graphData!.datasets![index].label!,
+                            style: CustomTextStyles().text(),
+                          )
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
             Expanded(
               child: BarChart(
                 BarChartData(
